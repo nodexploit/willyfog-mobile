@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="170dp">
+            android:layout_marginTop="260dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -66,22 +66,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Nombre"
-                android:ems="10"
-                android:id="@+id/name"
-                android:layout_marginTop="10dp"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/grade"
-                android:hint="Nombre de su grado"
-                android:layout_marginTop="10dp"/>
 
             <Button
                 android:id="@+id/email_sign_in_button"

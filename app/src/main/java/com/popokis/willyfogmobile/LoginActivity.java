@@ -61,8 +61,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private EditText mNameView;
-    private EditText mGradeView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -86,10 +84,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
-        mNameView = (EditText) findViewById(R.id.name);
-
-        mGradeView = (EditText) findViewById(R.id.grade);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -160,14 +154,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
-        mNameView.setError(null);
-        mGradeView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        String name = mNameView.getText().toString();
-        String grade = mGradeView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -190,31 +180,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(name)) {
-            mNameView.setError(getString(R.string.error_field_required));
-            focusView = mNameView;
-            cancel = true;
-        }
-
-        if (TextUtils.isEmpty(grade)) {
-            mNameView.setError(getString(R.string.error_field_required));
-            focusView = mGradeView;
-            cancel = true;
-        }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
-            String[] personalData = {name,grade};
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 //            showProgress(true);
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("PERSONAL_DATA", personalData);
             startActivity(intent);
         }
     }

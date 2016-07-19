@@ -6,11 +6,15 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -39,16 +43,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
         String nameStr = null;
         String gradeStr = null;
 
-        if (bundle != null) {
-            String[] personalData = (String[]) bundle.get("PERSONAL_DATA");
-            nameStr = personalData[0];
-            gradeStr = personalData[1];
-        }
 
         name = (TextView) findViewById(R.id.nameTextView);
         grade = (TextView) findViewById(R.id.gradeTextView);
@@ -71,6 +68,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_profile:
+                CharSequence text = "Ya estas en tu perfil!";
+                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT );
+                toast.show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
