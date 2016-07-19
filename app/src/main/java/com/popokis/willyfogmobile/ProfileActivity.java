@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class MainActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     protected TextView name;
     protected TextView grade;
@@ -29,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static String[] Universities = {"Universidad de Málaga", "Universidad de Oxford",
             "Universidad de Dinamarca del Sur", "Universidad de Bulgaria"};
-//    public static String[] photos = {"http://www.uma.es/media/files/marca_uma.jpg", "http://www.dtc.ox.ac.uk/people/12/muszkiewicz/Oxford_logo.png",
-//            "http://2.bp.blogspot.com/-oIcNjSOAjoI/Vkojfh8s0PI/AAAAAAAAAz0/8cMLZkRZvqY/s1600/University-of-Southern-Denmark-new-scholarships.png",
-//            "http://3.bp.blogspot.com/-4GHmgptoLYA/UZ5kef7ceDI/AAAAAAAAAjw/-8sFqKxfMW8/s1600/bulgaria.png"};
     public static String[] dates = {"31-01-2016", "24-12-2015", "1-11-2015", "1-11-2015"};
     public static int[] images = {R.drawable.uma, R.drawable.oxford, R.drawable.denmark, R.drawable.bulgaria};
 

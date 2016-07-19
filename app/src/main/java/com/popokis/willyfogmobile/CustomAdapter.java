@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by lotape6 on 11/07/16.
@@ -20,8 +19,8 @@ public class CustomAdapter extends BaseAdapter {
     String[] dates;
     private static LayoutInflater inflater = null;
 
-    public CustomAdapter(MainActivity mainActivity, String[] prgmNameList, int[] prgmImages, String[] prmgDates) {
-        context = mainActivity;
+    public CustomAdapter(ProfileActivity profileActivity, String[] prgmNameList, int[] prgmImages, String[] prmgDates) {
+        context = profileActivity;
         names = prgmNameList;
         images = prgmImages;
         dates = prmgDates;
