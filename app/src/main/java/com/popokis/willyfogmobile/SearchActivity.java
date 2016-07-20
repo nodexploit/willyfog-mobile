@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity
@@ -23,12 +24,32 @@ public class SearchActivity extends AppCompatActivity
     private static String INITIAL_QUERY = "http://www.popokis.willyfog.com/";
     private String example_query;
 
+    public static String[] uniNames = {"Universidad de Málaga","Universidad de Málaga",
+            "Universidad de Málaga", "Universidad de Oxford", "Universidad de Oxford",
+            "Universidad de Oxford", "Universidad de Dinamarca del Sur",
+            "Universidad de Dinamarca del Sur", "Universidad de Dinamarca del Sur",
+            "Universidad de Bulgaria", "Universidad de Bulgaria", "Universidad de Bulgaria"};
+    public static int[] images = {R.drawable.uma, R.drawable.uma, R.drawable.uma, R.drawable.oxford,
+            R.drawable.oxford, R.drawable.oxford, R.drawable.denmark, R.drawable.denmark,
+            R.drawable.denmark, R.drawable.bulgaria, R.drawable.bulgaria, R.drawable.bulgaria};
+    public static String[] subjects = {"Resistencia de Materiales", "Informatica", "Calculo",
+            "Resistencia de Materiales", "Informatica", "Calculo", "Resistencia de Materiales",
+            "Informatica", "Calculo", "Resistencia de Materiales", "Informatica", "Calculo"};
+    public static String[] degrees = {"Ingeniería brozil", "Ingeniería de la calle",
+            "Ingeniería", "Ingeniería brozil", "Ingeniería de la calle", "Ingeniería",
+            "Ingeniería brozil", "Ingeniería de la calle", "Ingeniería","Ingeniería brozil",
+            "Ingeniería de la calle", "Ingeniería"};
+    private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        listView = (ListView) findViewById(R.id.search_listView);
+        listView.setAdapter(new CustomSearchAdapter(this, uniNames, images, subjects, degrees));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,8 +62,8 @@ public class SearchActivity extends AppCompatActivity
 
         final EditText search_university = (EditText) findViewById(R.id.search_univirsity_textField);
         final EditText search_subject = (EditText) findViewById(R.id.search_subject_textField);
-        Button search_button = (Button) findViewById(R.id.search_button);
 
+        Button search_button = (Button) findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

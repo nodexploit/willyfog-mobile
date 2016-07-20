@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
         String nameStr = null;
         String gradeStr = null;
 
@@ -52,8 +50,8 @@ public class ProfileActivity extends AppCompatActivity {
         profile = (ImageView) findViewById(R.id.profileImageView);
         profile.setImageResource(R.drawable.willy_profile);
 
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(new CustomAdapter(this, Universities, images, dates));
+        listView = (ListView) findViewById(R.id.profile_listView);
+        listView.setAdapter(new CustomProfileAdapter(this, Universities, images, dates));
 
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {

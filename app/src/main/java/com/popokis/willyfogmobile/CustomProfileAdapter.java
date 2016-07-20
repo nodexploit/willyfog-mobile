@@ -11,7 +11,7 @@ import android.widget.TextView;
 /**
  * Created by lotape6 on 11/07/16.
  */
-public class CustomAdapter extends BaseAdapter {
+public class CustomProfileAdapter extends BaseAdapter {
 
     Context context;
     String[] names;
@@ -19,7 +19,7 @@ public class CustomAdapter extends BaseAdapter {
     String[] dates;
     private static LayoutInflater inflater = null;
 
-    public CustomAdapter(ProfileActivity profileActivity, String[] prgmNameList, int[] prgmImages, String[] prmgDates) {
+    public CustomProfileAdapter(ProfileActivity profileActivity, String[] prgmNameList, int[] prgmImages, String[] prmgDates) {
         context = profileActivity;
         names = prgmNameList;
         images = prgmImages;
@@ -58,7 +58,7 @@ public class CustomAdapter extends BaseAdapter {
         View rowView;
 
 
-        rowView = inflater.inflate(R.layout.list_element, null);
+        rowView = inflater.inflate(R.layout.profile_list_element, null);
         holder.name=(TextView) rowView.findViewById(R.id.uniName);
         holder.date=(TextView) rowView.findViewById(R.id.date);
         holder.message=(TextView) rowView.findViewById(R.id.textView);
