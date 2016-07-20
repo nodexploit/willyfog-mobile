@@ -81,13 +81,13 @@ public class CustomSearchAdapter extends BaseAdapter {
             }
         });
 
-
-//        rowView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, "You Clicked "+names[position], Toast.LENGTH_LONG).show();
-//            }
-//        });
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent universityProfileIntent = new Intent(context, UniversityProfileActivity.class);
+                context.startActivity(universityProfileIntent);
+            }
+        });
         return rowView;
     }
 
