@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -25,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected ImageView profile;
     protected Button button;
     protected ListView listView;
+    protected Boolean backPressed;
 
 
     public static String[] Universities = {"Universidad de Málaga", "Universidad de Oxford",
@@ -39,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         String nameStr = null;
         String gradeStr = null;
 
@@ -64,8 +65,14 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
             }
         });
-
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        backPressed = false;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -98,7 +105,8 @@ public class ProfileActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     try {
                         final Uri imageUri = imageReturnedIntent.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final InputStream imageStream = getContentResolver()
+                                .openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         profile.setImageBitmap(selectedImage);
                     } catch (FileNotFoundException e) {
@@ -107,5 +115,20 @@ public class ProfileActivity extends AppCompatActivity {
 
                 }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!backPressed) {
+            Toast closeAdvise = Toast.makeText(this,
+                    "Presiona otra vez para cerrar la app", Toast.LENGTH_SHORT);
+            closeAdvise.show();
+            backPressed = true;
+        }
+
+        else {
+            super.onBackPressed();
+        }
+
     }
 }
