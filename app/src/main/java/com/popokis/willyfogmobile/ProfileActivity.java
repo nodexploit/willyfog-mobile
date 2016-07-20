@@ -26,7 +26,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected ImageView profile;
     protected Button button;
     protected ListView listView;
-    protected Boolean backPressed;
 
 
     public static String[] Universities = {"Universidad de Málaga", "Universidad de Oxford",
@@ -65,12 +64,6 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        backPressed = false;
     }
 
     @Override
@@ -115,20 +108,5 @@ public class ProfileActivity extends AppCompatActivity {
 
                 }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (!backPressed) {
-            Toast closeAdvise = Toast.makeText(this,
-                    "Presiona otra vez para cerrar la app", Toast.LENGTH_SHORT);
-            closeAdvise.show();
-            backPressed = true;
-        }
-
-        else {
-            super.onBackPressed();
-        }
-
     }
 }
