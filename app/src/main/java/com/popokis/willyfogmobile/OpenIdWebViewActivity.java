@@ -1,9 +1,21 @@
 package com.popokis.willyfogmobile;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class OpenIdWebViewActivity extends AppCompatActivity {
 
@@ -12,6 +24,11 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
     private String responseType = "code";
     private String state = "xyz";
     private String scope = "openid";
+
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
+
+    OkHttpClient client = new OkHttpClient();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +42,16 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 if (url.startsWith("willyfog://")) {
-                    System.out.println(url);
+
+                    AsyncTask<String, String, String> execute = new PostTask().execute(url);
+
+                    try {
+                        System.out.println(execute.get());
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     view.loadUrl(url);
                 }
@@ -39,5 +65,53 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
                 "&response_type=" + responseType +
                 "&scope=" + scope +
                 "&state=" + state);
+    }
+
+    public String post(String url, String code) throws IOException {
+        FormBody body = new FormBody.Builder()
+                .add("grant_type", "authorization_code")
+                .add("client_id", "mobileclient")
+                .add("code", code)
+                .add("redirect_uri", "willyfog://login/callback")
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
+    public Map<String, String> queryStringToMap(String query) {
+        HashMap<String, String> queryString = new HashMap<>();
+        String[] params = query.split("&");
+
+        for (String assignment: params) {
+            String[] keyValue = assignment.split("=");
+            queryString.put(keyValue[0], keyValue[1]);
+        }
+
+        return queryString;
+    }
+
+    private class PostTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... data) {
+            String url = data[0];
+            String [] chunk = url.split("\\?");
+
+            Map<String, String> queryString = queryStringToMap(chunk[1]);
+
+            String code = queryString.get("code");
+
+            String result = "";
+            try {
+                result = post("http://192.168.1.132:7000/token", code);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
     }
 }
