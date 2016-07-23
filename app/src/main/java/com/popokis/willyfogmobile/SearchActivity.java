@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     private static String INITIAL_QUERY = "http://www.popokis.willyfog.com/";
     private String example_query;
 
