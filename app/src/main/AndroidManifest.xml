@@ -15,6 +15,7 @@
         android:launchMode="singleInstance"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".LoginActivity"
             android:configChanges="orientation"
@@ -33,12 +34,6 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".IndexActivity"
-            android:configChanges="orientation"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".SearchActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_search"
@@ -52,18 +47,13 @@
             android:name=".OpenIdWebViewActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="willyfog" android:host="login/callback" />
             </intent-filter>
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
-                <!--<data android:scheme="http" android:host="market.android.com"-->
-                    <!--android:path="/search" />-->
-            <!--</intent-filter>-->
         </activity>
+
     </application>
 
 </manifest>

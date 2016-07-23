@@ -11,9 +11,9 @@ public class IndexActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Context context = this;
-
         super.onCreate(savedInstanceState);
+
+        final Context context = this;
         setContentView(R.layout.activity_index);
 
         final Button openIdButton = (Button) findViewById(R.id.open_id_button);
