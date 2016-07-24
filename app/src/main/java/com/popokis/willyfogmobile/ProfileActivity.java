@@ -1,6 +1,8 @@
 package com.popokis.willyfogmobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -24,7 +27,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected ImageView profile;
     protected Button button;
     protected ListView listView;
-
 
     public static String[] Universities = {"Universidad de Málaga", "Universidad de Oxford",
             "Universidad de Dinamarca del Sur", "Universidad de Bulgaria"};
@@ -37,14 +39,24 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPref = this.getSharedPreferences(
+                getString(R.string.shared_pref_name),
+                Context.MODE_PRIVATE
+        );
+        String key = getResources().getString(R.string.auth_pref_key);
+        String accessToken = sharedPref.getString(key, null);
+
         setContentView(R.layout.activity_profile);
         String nameStr = null;
         String gradeStr = null;
 
 
+
+
         name = (TextView) findViewById(R.id.nameTextView);
         grade = (TextView) findViewById(R.id.gradeTextView);
-        name.setText(nameStr);
+        name.setText(accessToken);
         grade.setText(gradeStr);
 
         profile = (ImageView) findViewById(R.id.profileImageView);

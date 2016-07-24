@@ -1,6 +1,8 @@
 package com.popokis.willyfogmobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +18,19 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPref = this.getSharedPreferences(
+                getString(R.string.shared_pref_name),
+                Context.MODE_PRIVATE
+        );
+        String key = getResources().getString(R.string.auth_pref_key);
+        String accessToken = sharedPref.getString(key, null);
+
+        if (accessToken != null) {
+            Intent i = new Intent(this, ProfileActivity.class);
+            startActivity(i);
+            finish();
+        }
 
         setContentView(R.layout.activity_login);
 

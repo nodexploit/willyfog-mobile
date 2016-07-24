@@ -1,18 +1,25 @@
 package com.popokis.willyfogmobile;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -25,10 +32,9 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
     private String state = "xyz";
     private String scope = "openid";
 
-    public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
+    private OkHttpClient client = new OkHttpClient();
 
-    OkHttpClient client = new OkHttpClient();
+    private final Gson gson = new Gson();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,27 +43,53 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
 
         final WebView webView = (WebView) findViewById(R.id.openIdWebView);
 
+        final Context context = this;
+
         webView.setWebViewClient(new WebViewClient() {
+
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
+            public void onPageFinished(WebView view, String url) {
                 if (url.startsWith("willyfog://")) {
-
                     AsyncTask<String, String, String> execute = new PostTask().execute(url);
 
+                    Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                     try {
-                        System.out.println(execute.get());
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+
+                        String jsonRes = execute.get();
+
+                        JsonObjectWilly oir = gson.fromJson(jsonRes, JsonObjectWilly.class);
+
+                        String accessToken = oir.access_token;
+                        String idToken = oir.id_token;
+
+                        String key = new GetTask().execute().get();
+
+                        // Jws<Claims> claimsJws = Jwts.parser().setSigningKey(key).parseClaimsJws(idToken);
+
+                        // JWTWilly userData = gson.fromJson(claimsJws.getBody().getSubject(), JWTWilly.class);
+
+                        // String userId = userData.sub;
+
+                        SharedPreferences sPref = context.getSharedPreferences(
+                                getString(R.string.shared_pref_name),
+                                Context.MODE_PRIVATE
+                        );
+
+                        sPref.edit().putString(
+                                getString(R.string.auth_pref_key),
+                                accessToken
+                                ).commit();
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
                     }
-                } else {
-                    view.loadUrl(url);
-                }
 
-                return true;
+                    startActivity(intent);
+                }
             }
+
         });
 
         webView.loadUrl("http://192.168.1.132:7000/authorize?client_id=" + clientId +
@@ -68,16 +100,19 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
     }
 
     public String post(String url, String code) throws IOException {
+
         FormBody body = new FormBody.Builder()
                 .add("grant_type", "authorization_code")
                 .add("client_id", "mobileclient")
                 .add("code", code)
                 .add("redirect_uri", "willyfog://login/callback")
                 .build();
+
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
+
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
@@ -113,5 +148,41 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
 
             return result;
         }
+    }
+
+    private class GetTask extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... data) {
+
+            String result = "";
+            String url = "http://192.168.1.132:7000/public-key";
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+                result = response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+    }
+
+    static class JsonObjectWilly {
+        String access_token;
+        String id_token;
+
+        JsonObjectWilly () {}
+    }
+
+    static class JWTWilly {
+        String sub;
+
+        JWTWilly () {}
     }
 }
