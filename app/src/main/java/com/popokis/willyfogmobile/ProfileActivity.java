@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -17,8 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.popokis.http.Client;
+
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -46,6 +52,17 @@ public class ProfileActivity extends AppCompatActivity {
         );
         String key = getResources().getString(R.string.auth_pref_key);
         String accessToken = sharedPref.getString(key, null);
+        String url = "http://popokis.com:7000/api/v1/users/1";
+
+        AsyncTask<String, String, String> execute = new GetUser().execute(url, accessToken);
+        String x = null;
+        try {
+            x = execute.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         setContentView(R.layout.activity_profile);
         String nameStr = null;
@@ -56,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.nameTextView);
         grade = (TextView) findViewById(R.id.gradeTextView);
-        name.setText(accessToken);
+        name.setText(x);
         grade.setText(gradeStr);
 
         profile = (ImageView) findViewById(R.id.profileImageView);
@@ -74,6 +91,10 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     @Override
@@ -117,6 +138,23 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                 }
+        }
+    }
+
+    private class GetUser extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... data) {
+            String url = data[0];
+            String accessToken = data[1];
+
+            String result = "";
+            try {
+                result = (new Client(accessToken)).get(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
         }
     }
 }

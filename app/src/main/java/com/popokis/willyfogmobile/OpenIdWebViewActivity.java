@@ -1,5 +1,6 @@
 package com.popokis.willyfogmobile;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +15,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -24,63 +24,51 @@ import okhttp3.Response;
 public class OpenIdWebViewActivity extends AppCompatActivity {
 
     private String clientId = "mobileclient";
+    private String clientSecret = "mobilesecret";
     private String redirectUri = "willyfog://login/callback";
     private String responseType = "code";
     private String state = "xyz";
     private String scope = "openid";
+    private String grantType = "authorization_code";
 
     private OkHttpClient client = new OkHttpClient();
 
     private final Gson gson = new Gson();
+
+    private WebView webView;
+
+    private ProgressDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.webview);
 
-        final WebView webView = (WebView) findViewById(R.id.openIdWebView);
-
-        final Context context = this;
+        webView = (WebView) findViewById(R.id.openIdWebView);
 
         webView.setWebViewClient(new WebViewClient() {
 
             @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("willyfog://")) {
+                    new PostTask().execute(url);
+                }
+
+                return false;
+            }
+
+            @Override
             public void onPageFinished(WebView view, String url) {
                 if (url.startsWith("willyfog://")) {
-                    AsyncTask<String, String, String> execute = new PostTask().execute(url);
-
                     Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                    try {
-
-                        String jsonRes = execute.get();
-
-                        JsonObjectWilly oir = gson.fromJson(jsonRes, JsonObjectWilly.class);
-
-                        String accessToken = oir.access_token;
-
-                        SharedPreferences sPref = context.getSharedPreferences(
-                                getString(R.string.shared_pref_name),
-                                Context.MODE_PRIVATE
-                        );
-
-                        sPref.edit().putString(
-                                getString(R.string.auth_pref_key),
-                                accessToken
-                                ).commit();
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-
                     startActivity(intent);
+                    finish();
                 }
             }
 
         });
 
-        webView.loadUrl("http://192.168.1.132:7000/authorize?client_id=" + clientId +
+        webView.loadUrl("http://popokis.com:9000/authorize?client_id=" + clientId +
                 "&redirect_uri=" + redirectUri +
                 "&response_type=" + responseType +
                 "&scope=" + scope +
@@ -90,10 +78,11 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
     public String post(String url, String code) throws IOException {
 
         FormBody body = new FormBody.Builder()
-                .add("grant_type", "authorization_code")
-                .add("client_id", "mobileclient")
+                .add("grant_type", grantType)
+                .add("client_id", clientId)
+                .add("client_secret", clientSecret)
                 .add("code", code)
-                .add("redirect_uri", "willyfog://login/callback")
+                .add("redirect_uri", redirectUri)
                 .build();
 
         Request request = new Request.Builder()
@@ -118,6 +107,14 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
     }
 
     private class PostTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = ProgressDialog.show(OpenIdWebViewActivity.this, "", "Loading...", true);
+            dialog.show();
+        }
+
         @Override
         protected String doInBackground(String... data) {
             String url = data[0];
@@ -129,12 +126,32 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
 
             String result = "";
             try {
-                result = post("http://192.168.1.132:7000/token", code);
+                result = post("http://popokis.com:9000/token", code);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             return result;
+        }
+
+        @Override
+        protected void onPostExecute(String param) {
+            dialog.dismiss();
+
+            JsonObjectWilly oir = gson.fromJson(param, JsonObjectWilly.class);
+
+            String accessToken = oir.access_token;
+
+            SharedPreferences sPref = getApplicationContext().getSharedPreferences(
+                    getString(R.string.shared_pref_name),
+                    Context.MODE_PRIVATE
+            );
+
+            sPref.edit().putString(
+                    getString(R.string.auth_pref_key),
+                    accessToken
+            ).commit();
+
         }
     }
 
@@ -142,5 +159,14 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
         String access_token;
 
         JsonObjectWilly () {}
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
