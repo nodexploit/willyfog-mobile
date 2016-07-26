@@ -18,12 +18,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.popokis.http.Client;
+import com.popokis.http.SecureClient;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -121,6 +120,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+
+        finish();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
@@ -149,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             String result = "";
             try {
-                result = (new Client(accessToken)).get(url);
+                result = (new SecureClient(accessToken)).get(url);
             } catch (IOException e) {
                 e.printStackTrace();
             }

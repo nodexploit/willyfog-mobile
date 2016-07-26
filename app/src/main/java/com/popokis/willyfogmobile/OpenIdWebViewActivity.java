@@ -53,17 +53,7 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
                 if (url.startsWith("willyfog://")) {
                     new PostTask().execute(url);
                 }
-
                 return false;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                if (url.startsWith("willyfog://")) {
-                    Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
             }
 
         });
@@ -113,6 +103,7 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
             super.onPreExecute();
             dialog = ProgressDialog.show(OpenIdWebViewActivity.this, "", "Loading...", true);
             dialog.show();
+            destroyWebView();
         }
 
         @Override
@@ -152,6 +143,10 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
                     accessToken
             ).commit();
 
+            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(intent);
+            finish();
+
         }
     }
 
@@ -168,5 +163,18 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void destroyWebView() {
+
+        if(webView != null) {
+            webView.clearHistory();
+            webView.clearCache(true);
+            webView.loadUrl("about:blank");
+            webView.freeMemory();
+            webView.pauseTimers();
+            webView = null;
+        }
+
     }
 }

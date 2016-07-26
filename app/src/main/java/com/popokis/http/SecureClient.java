@@ -8,14 +8,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Client extends OkHttpClient {
+public class SecureClient extends OkHttpClient {
 
     private OkHttpClient client;
     private String accessToken;
     private static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
-    public Client(String accessToken) {
+    public SecureClient(String accessToken) {
         this.client = new OkHttpClient();
         this.accessToken = accessToken;
     }
