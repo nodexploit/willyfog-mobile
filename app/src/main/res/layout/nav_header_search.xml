@@ -15,7 +15,7 @@
         android:id="@+id/imageView"
         android:layout_width="70dp"
         android:layout_height="80dp"
-        android:src="@drawable/cordial_willy" />
+        android:src="@drawable/bulgaria" />
 
     <TextView
         android:layout_width="match_parent"

@@ -9,9 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by lotape6 on 11/07/16.
- */
 public class CustomProfileAdapter extends BaseAdapter {
 
     Context context;

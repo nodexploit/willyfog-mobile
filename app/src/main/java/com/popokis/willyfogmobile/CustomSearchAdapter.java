@@ -9,11 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.Intent;
 
-/**
- * Created by root on 20/07/16.
- */
 public class CustomSearchAdapter extends BaseAdapter {
     Context context;
     String[] uniNames;
