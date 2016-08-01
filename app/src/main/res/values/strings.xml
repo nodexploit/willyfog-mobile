@@ -31,4 +31,6 @@
 
     <string name="shared_pref_name">com.popokis.willyfogmobile.PREFERENCE_FILE_KEY</string>
     <string name="auth_pref_key">willy_auth</string>
+    <string name="public_key_open">open_key_pub</string>
+    <string name="user_id">willy_id_token</string>
 </resources>

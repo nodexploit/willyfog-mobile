@@ -7,15 +7,21 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -132,6 +138,20 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
             JsonObjectWilly oir = gson.fromJson(param, JsonObjectWilly.class);
 
             String accessToken = oir.access_token;
+            String publKey = "";
+
+            SharedPreferences sharedPref = getSharedPreferences(
+                    getString(R.string.shared_pref_name),
+                    Context.MODE_PRIVATE
+            );
+            String pubKey = getResources().getString(R.string.public_key_open);
+            publKey = sharedPref.getString(pubKey, null);
+
+            String idToken = oir.id_token;
+
+            Claims body = Jwts.parser().setSigningKey(getKey(publKey)).parseClaimsJws(idToken).getBody();
+
+            String userId = body.getSubject();
 
             SharedPreferences sPref = getApplicationContext().getSharedPreferences(
                     getString(R.string.shared_pref_name),
@@ -143,6 +163,11 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
                     accessToken
             ).commit();
 
+            sPref.edit().putString(
+                    getString(R.string.user_id),
+                    userId
+            ).commit();
+
             Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
             startActivity(intent);
             finish();
@@ -152,6 +177,7 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
 
     static class JsonObjectWilly {
         String access_token;
+        String id_token;
 
         JsonObjectWilly () {}
     }
@@ -176,5 +202,20 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
             webView = null;
         }
 
+    }
+
+    public static PublicKey getKey(String key){
+        try{
+            byte[] byteKey = Base64.decode(key.getBytes("UTF-8"), Base64.DEFAULT);
+            X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(byteKey);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+
+            return kf.generatePublic(X509publicKey);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

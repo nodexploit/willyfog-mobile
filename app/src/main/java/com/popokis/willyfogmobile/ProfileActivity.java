@@ -37,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private final Gson gson = new Gson();
     private String accessToken;
+    private String userId;
 
     public static String[] Universities = {"Universidad de Málaga", "Universidad de Oxford",
             "Universidad de Dinamarca del Sur", "Universidad de Bulgaria"};
@@ -55,19 +56,18 @@ public class ProfileActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE
         );
         String key = getResources().getString(R.string.auth_pref_key);
+        String userIdent = getResources().getString(R.string.user_id);
         accessToken = sharedPref.getString(key, null);
-        String url = "http://popokis.com:7000/api/v1/users/info/u?accessToken=" + accessToken;
+        userId = sharedPref.getString(userIdent, null);
+        String url = "http://popokis.com:7000/api/v1/users/" + userId + "/info";
 
         AsyncTask<String, String, String> execute = new GetUser().execute(url, accessToken);
         String x = null;
+        UserInfoDegree userInfo = null;
         try {
             x = execute.get();
 
-            UserInfo userInfo = gson.fromJson(x, UserInfo.class);
-            String urlInfo = "http://popokis.com:7000/api/v1/users/" + userInfo.id + "/info";
-            AsyncTask<String, String, String> userInfoDegree = new GetUserInfo().execute(urlInfo, accessToken);
-
-            String u = userInfoDegree.get();
+            userInfo = gson.fromJson(x, UserInfoDegree.class);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -76,12 +76,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_profile);
-        String nameStr = null;
-        String gradeStr = null;
+        String nameStr = userInfo.name;
+        String gradeStr = userInfo.degree_name;
 
         name = (TextView) findViewById(R.id.nameTextView);
         grade = (TextView) findViewById(R.id.gradeTextView);
-        name.setText(x);
+        name.setText(nameStr);
         grade.setText(gradeStr);
 
         profile = (ImageView) findViewById(R.id.profileImageView);
@@ -173,13 +173,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private class GetUserInfo extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... data) {
-            return "";
-        }
-    }
-
     static class UserInfoDegree {
         String degree_name;
         String surname;
@@ -191,15 +184,5 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         UserInfoDegree () {}
-    }
-
-    static class UserInfo {
-        String name;
-        String surname;
-        String nif;
-        String email;
-        Integer id;
-
-        UserInfo() {}
     }
 }
