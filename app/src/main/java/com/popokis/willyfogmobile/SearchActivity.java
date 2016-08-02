@@ -16,20 +16,19 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class SearchActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static String INITIAL_QUERY = "http://www.popokis.willyfog.com/";
-    private String example_query;
 
     public static String[] uniNames = {"Universidad de Málaga","Universidad de Málaga",
             "Universidad de Málaga", "Universidad de Oxford", "Universidad de Oxford",
             "Universidad de Oxford", "Universidad de Dinamarca del Sur",
             "Universidad de Dinamarca del Sur", "Universidad de Dinamarca del Sur",
             "Universidad de Bulgaria", "Universidad de Bulgaria", "Universidad de Bulgaria"};
+
     public static int[] images = {R.drawable.uma, R.drawable.uma, R.drawable.uma, R.drawable.oxford,
             R.drawable.oxford, R.drawable.oxford, R.drawable.denmark, R.drawable.denmark,
             R.drawable.denmark, R.drawable.bulgaria, R.drawable.bulgaria, R.drawable.bulgaria};
+
     public static String[] subjects = {"Resistencia de Materiales", "Informatica", "Calculo",
             "Resistencia de Materiales", "Informatica", "Calculo", "Resistencia de Materiales",
             "Informatica", "Calculo", "Resistencia de Materiales", "Informatica", "Calculo"};
@@ -120,30 +119,12 @@ public class SearchActivity extends AppCompatActivity
     public void requestAPI(String university_name, String subject_name) {
 
         if (university_name.isEmpty() && subject_name.isEmpty()) {
-            CharSequence error = "Debes rellenar almenos un campo";
+            CharSequence error = "Debes rellenar al menos un campo";
             Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT );
             toast.show();
         } else {
 
-            example_query = INITIAL_QUERY;
-
-            if (!subject_name.isEmpty() && !university_name.isEmpty()) {
-
-                example_query = example_query + "subject=" + subject_name +
-                        "&" + "university=" + university_name;
-
-            } else if (university_name.isEmpty()) {
-
-                example_query = example_query + "subject=" + subject_name;
-
-            } else {
-
-                example_query = example_query + "university=" + university_name;
-
-            }
-            Toast example_get_toast = Toast.makeText(getApplicationContext(),
-                    example_query, Toast.LENGTH_SHORT);
-            example_get_toast.show();
+            // Do search
         }
     }
 

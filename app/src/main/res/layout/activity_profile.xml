@@ -3,41 +3,83 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-
-    <ImageView
-        android:layout_width="160dp"
-        android:layout_height="200dp"
-        android:id="@+id/profileImageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+    <!--DNI-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/dniTextView"
+        android:text="@string/numero_documento"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"/>
+        android:layout_marginStart="16dp"
+        android:typeface="serif" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/document_id_text"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/dniTextView"
+        android:typeface="serif" />
+
+    <!--Nombre-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/nombreTextView"
+        android:text="@string/nombre_profile"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/dniTextView"
+        android:typeface="serif" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/nameTextView"
-        android:layout_alignTop="@+id/profileImageView"
-        android:layout_toRightOf="@+id/profileImageView"
-        android:layout_toEndOf="@+id/profileImageView"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/nombreTextView"
+        android:layout_below="@+id/document_id_text"
+        android:typeface="serif" />
+
+    <!--Apellidos-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/apellidosTextView"
+        android:text="@string/apellidos_profile"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/nameTextView"
         android:typeface="serif" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/surnameTextView"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/apellidosTextView"
+        android:layout_below="@+id/nameTextView"
+        android:typeface="serif" />
+
+    <!--Matriculado en-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/matriculada_en"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
         android:id="@+id/auxTextView"
-        android:layout_below="@+id/nameTextView"
-        android:layout_toRightOf="@+id/profileImageView"
-        android:layout_toEndOf="@+id/profileImageView" />
+        android:layout_below="@+id/apellidosTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,31 +87,69 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/gradeTextView"
         android:layout_below="@+id/auxTextView"
-        android:layout_toRightOf="@+id/profileImageView"
-        android:layout_toEndOf="@+id/profileImageView"
+        android:layout_toEndOf="@+id/nameTextView"
         android:typeface="serif" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:background="@mipmap/ic_launcher"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/button"
-        android:layout_alignBottom="@+id/profileImageView"
-        android:layout_alignRight="@+id/profileImageView"
-        android:layout_marginRight="9dp"
-        android:layout_marginBottom="9dp"/>
-
-
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/profile_listView"
+    <!--Centro-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/centreTextView"
+        android:text="@string/centre_text"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/profileImageView" />
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/gradeTextView"
+        android:typeface="serif" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/centre_user_profile"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/centreTextView"/>
 
+    <!--Universidad-->
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/universityTextView"
+        android:text="@string/university_text"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/centre_user_profile"
+        android:typeface="serif" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/university_user_profile"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/universityTextView"/>
+
+    <!--Universidad-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/correoTextView"
+        android:text="@string/correo_text"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/university_user_profile"
+        android:typeface="serif" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/email_user_profile"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_below="@+id/correoTextView"/>
 
 </RelativeLayout>

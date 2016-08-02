@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CustomSearchAdapter extends BaseAdapter {
+
     Context context;
     String[] uniNames;
     int[] images;
@@ -53,6 +54,7 @@ public class CustomSearchAdapter extends BaseAdapter {
         ImageView img;
         Button button;
     }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Holder holder=new Holder();
@@ -69,19 +71,12 @@ public class CustomSearchAdapter extends BaseAdapter {
         holder.degree.setText(degrees[position]);
 
         holder.button = (Button) rowView.findViewById(R.id.button2);
+
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent requestIntent = new Intent(context, RequestActivity.class);
                 context.startActivity(requestIntent);
-            }
-        });
-
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent universityProfileIntent = new Intent(context, UniversityProfileActivity.class);
-                context.startActivity(universityProfileIntent);
             }
         });
         return rowView;

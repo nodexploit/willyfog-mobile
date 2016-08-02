@@ -43,8 +43,6 @@
 
         <activity android:name=".RequestActivity"></activity>
 
-        <activity android:name=".UniversityProfileActivity"></activity>
-
         <activity
             android:name=".OpenIdWebViewActivity"
             android:label="@string/app_name" >

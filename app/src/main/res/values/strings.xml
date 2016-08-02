@@ -14,7 +14,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="matriculada_en">"Matriculad@ en: "</string>
+    <string name="matriculada_en">"Matriculado/a en: "</string>
+    <string name="nombre_profile">Nombre: </string>
+    <string name="apellidos_profile">Apellidos: </string>
+    <string name="numero_documento">Nº Documento: </string>
+    <string name="centre_text">Centro:</string>
+    <string name="university_text">Universidad: </string>
+    <string name="correo_text">Email: </string>
     <string name="app_label">Search</string>
     <string name="search_hint">Search Me</string>
     <string name="search">Search</string>
