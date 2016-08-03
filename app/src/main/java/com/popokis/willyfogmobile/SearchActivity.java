@@ -1,6 +1,10 @@
 package com.popokis.willyfogmobile;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,8 +20,21 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.popokis.http.SecureClient;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private ProgressDialog dialog;
+    private String accessToken;
+    private final Gson gson = new Gson();
 
     public static String[] uniNames = {"Universidad de Málaga","Universidad de Málaga",
             "Universidad de Málaga", "Universidad de Oxford", "Universidad de Oxford",
@@ -32,10 +49,12 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
     public static String[] subjects = {"Resistencia de Materiales", "Informatica", "Calculo",
             "Resistencia de Materiales", "Informatica", "Calculo", "Resistencia de Materiales",
             "Informatica", "Calculo", "Resistencia de Materiales", "Informatica", "Calculo"};
+
     public static String[] degrees = {"Ingeniería brozil", "Ingeniería de la calle",
             "Ingeniería", "Ingeniería brozil", "Ingeniería de la calle", "Ingeniería",
             "Ingeniería brozil", "Ingeniería de la calle", "Ingeniería","Ingeniería brozil",
             "Ingeniería de la calle", "Ingeniería"};
+
     private ListView listView;
 
     @Override
@@ -44,6 +63,13 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.searchable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences sharedPref = this.getSharedPreferences(
+                getString(R.string.shared_pref_name),
+                Context.MODE_PRIVATE
+        );
+        String key = getResources().getString(R.string.auth_pref_key);
+        accessToken = sharedPref.getString(key, null);
 
         listView = (ListView) findViewById(R.id.search_listView);
         listView.setAdapter(new CustomSearchAdapter(this, uniNames, images, subjects, degrees));
@@ -124,8 +150,60 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
             toast.show();
         } else {
 
-            // Do search
+            try {
+                List<Equivalence> response = new GetEquivalences().execute(
+                        "http://popokis.com:7000/api/v1/equivalences?subjectName=" + subject_name, accessToken).get();
+
+                response.get(0);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private class GetEquivalences extends AsyncTask<String, String, List<Equivalence>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = ProgressDialog.show(SearchActivity.this, "", "Loading...", true);
+            dialog.show();
+        }
+
+        @Override
+        protected List<Equivalence> doInBackground(String... data) {
+            String url = data[0];
+            String accessToken = data[1];
+
+            List<Equivalence> result = null;
+            Type listType = new TypeToken<List<Equivalence>>() {}.getType();
+
+            try {
+                result = gson.fromJson((new SecureClient(accessToken)).get(url), listType);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<Equivalence> param) {
+            dialog.dismiss();
+        }
+    }
+
+    static class Equivalence {
+        String subject_id;
+        String equivalent_name;
+        String subject_name;
+        String id;
+        String equivalent_id;
+
+        Equivalence () {}
     }
 
 }
