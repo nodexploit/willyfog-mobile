@@ -23,8 +23,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.popokis.http.SecureClient;
+import com.popokis.models.Equivalence;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -154,7 +156,9 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
                 List<Equivalence> response = new GetEquivalences().execute(
                         "http://popokis.com:7000/api/v1/equivalences?subjectName=" + subject_name, accessToken).get();
 
-                response.get(0);
+                Intent intent = new Intent(getApplicationContext(), EquivalencesActivity.class);
+                intent.putExtra("equivalences", (Serializable) response);
+                startActivity(intent);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -194,16 +198,6 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         protected void onPostExecute(List<Equivalence> param) {
             dialog.dismiss();
         }
-    }
-
-    static class Equivalence {
-        String subject_id;
-        String equivalent_name;
-        String subject_name;
-        String id;
-        String equivalent_id;
-
-        Equivalence () {}
     }
 
 }
