@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
     <!--DNI-->
@@ -151,5 +153,14 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_below="@+id/correoTextView"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mis peticiones"
+        android:id="@+id/request_button"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/email_user_profile" />
 
 </RelativeLayout>

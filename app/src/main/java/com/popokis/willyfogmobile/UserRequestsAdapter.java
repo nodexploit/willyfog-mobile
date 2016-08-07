@@ -7,30 +7,30 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.popokis.models.Equivalence;
+import com.popokis.models.UserRequests;
 
 import java.util.List;
 
-public class EquivalenceSearchAdapter extends BaseAdapter {
+public class UserRequestsAdapter extends BaseAdapter {
 
     Context context;
-    List<Equivalence> equivalenceList;
+    List<UserRequests> requestsList;
     private static LayoutInflater inflater = null;
 
-    public EquivalenceSearchAdapter(Context context, List<Equivalence> equivalenceList) {
+    public UserRequestsAdapter(Context context, List<UserRequests> list) {
         this.context = context;
-        this.equivalenceList = equivalenceList;
+        this.requestsList = list;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return equivalenceList.size();
+        return requestsList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return equivalenceList.get(i);
+        return requestsList.get(i);
     }
 
     @Override
@@ -42,11 +42,11 @@ public class EquivalenceSearchAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View rowView;
 
-        rowView = inflater.inflate(R.layout.equivalence_row, null);
+        rowView = inflater.inflate(R.layout.request_row, null);
 
         TextView title;
-        title = (TextView) rowView.findViewById(R.id.element_equivalence_name);
-        title.setText(equivalenceList.get(i).getEquivalent_name());
+        title = (TextView) rowView.findViewById(R.id.element_request_name);
+        title.setText(requestsList.get(i).getSubject_name());
 
         return rowView;
     }

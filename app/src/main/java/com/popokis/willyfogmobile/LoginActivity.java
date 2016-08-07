@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.popokis.http.Client;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A login screen that offers login button and redirect
@@ -34,23 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         String key = getResources().getString(R.string.auth_pref_key);
         String accessToken = sharedPref.getString(key, null);
 
-        String url = "http://popokis.com:9000/public-key";
-
-        AsyncTask<String, String, String> execute = new GetPubKey().execute(url);
-        String pubKey = "";
-        try {
-            pubKey = execute.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
         if (accessToken != null) {
             Intent i = new Intent(this, ProfileActivity.class);
             startActivity(i);
             finish();
         }
+
+        String url = "http://popokis.com:9000/public-key";
+
+        new GetPubKey().execute(url);
 
         setContentView(R.layout.activity_login);
 
@@ -75,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private class GetPubKey extends AsyncTask<String, String, String> {
+
         @Override
         protected String doInBackground(String... data) {
             String url = data[0];

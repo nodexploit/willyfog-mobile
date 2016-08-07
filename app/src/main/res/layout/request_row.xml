@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:id="@+id/button2"
+        android:id="@+id/request_row_button"
         android:background="@mipmap/ic_send_request" />
 
     <TextView
@@ -14,8 +16,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
         android:text="Large Text"
-        android:id="@+id/element_equivalence_name"
-        android:layout_toEndOf="@+id/button2"
+        android:id="@+id/element_request_name"
+        android:layout_toEndOf="@+id/request_row_button"
         android:textStyle="bold" />
 
 

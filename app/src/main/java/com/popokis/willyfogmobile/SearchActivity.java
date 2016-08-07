@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -37,32 +36,13 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
     private ProgressDialog dialog;
     private String accessToken;
     private final Gson gson = new Gson();
-
-    public static String[] uniNames = {"Universidad de Málaga","Universidad de Málaga",
-            "Universidad de Málaga", "Universidad de Oxford", "Universidad de Oxford",
-            "Universidad de Oxford", "Universidad de Dinamarca del Sur",
-            "Universidad de Dinamarca del Sur", "Universidad de Dinamarca del Sur",
-            "Universidad de Bulgaria", "Universidad de Bulgaria", "Universidad de Bulgaria"};
-
-    public static int[] images = {R.drawable.uma, R.drawable.uma, R.drawable.uma, R.drawable.oxford,
-            R.drawable.oxford, R.drawable.oxford, R.drawable.denmark, R.drawable.denmark,
-            R.drawable.denmark, R.drawable.bulgaria, R.drawable.bulgaria, R.drawable.bulgaria};
-
-    public static String[] subjects = {"Resistencia de Materiales", "Informatica", "Calculo",
-            "Resistencia de Materiales", "Informatica", "Calculo", "Resistencia de Materiales",
-            "Informatica", "Calculo", "Resistencia de Materiales", "Informatica", "Calculo"};
-
-    public static String[] degrees = {"Ingeniería brozil", "Ingeniería de la calle",
-            "Ingeniería", "Ingeniería brozil", "Ingeniería de la calle", "Ingeniería",
-            "Ingeniería brozil", "Ingeniería de la calle", "Ingeniería","Ingeniería brozil",
-            "Ingeniería de la calle", "Ingeniería"};
-
-    private ListView listView;
+    protected DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchable);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,10 +53,7 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         String key = getResources().getString(R.string.auth_pref_key);
         accessToken = sharedPref.getString(key, null);
 
-        listView = (ListView) findViewById(R.id.search_listView);
-        listView.setAdapter(new CustomSearchAdapter(this, uniNames, images, subjects, degrees));
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);

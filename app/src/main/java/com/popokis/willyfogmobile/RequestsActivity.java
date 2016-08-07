@@ -7,26 +7,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.popokis.models.Equivalence;
+import com.popokis.models.UserRequests;
 
 import java.util.List;
 
-public class EquivalencesActivity extends AppCompatActivity {
+public class RequestsActivity extends AppCompatActivity {
 
-    private ListView listEquivalencesView;
+    private ListView listRequestsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_equivalences);
+        setContentView(R.layout.activity_requests);
 
         Intent i = getIntent();
-        List<Equivalence> list = (List<Equivalence>) i.getSerializableExtra("equivalences");
+        List<UserRequests> list = (List<UserRequests>) i.getSerializableExtra("requests");
 
-        listEquivalencesView = (ListView) findViewById(R.id.listEquivalenceView);
-        listEquivalencesView.setAdapter(new EquivalenceSearchAdapter(this, list));
-
+        listRequestsView = (ListView) findViewById(R.id.listRequestsView);
+        listRequestsView.setAdapter(new UserRequestsAdapter(this, list));
     }
 
     @Override
