@@ -110,6 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     static class UserInfoDegree {
+        Integer degree_id;
         String degree_name;
         String surname;
         String centre_name;
