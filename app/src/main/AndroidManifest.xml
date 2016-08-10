@@ -53,7 +53,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".EquivalencesActivity" />
-        <activity android:name=".RequestsActivity"></activity>
+        <activity android:name=".RequestsActivity" />
+        <activity android:name=".NotificationActivity"></activity>
     </application>
 
 </manifest>

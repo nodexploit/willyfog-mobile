@@ -82,6 +82,10 @@ public class ProfileActivity extends AppCompatActivity {
                 CharSequence text = "Ya estas en tu perfil";
                 Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT );
                 toast.show();
+
+            case R.id.action_notification:
+
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -12,4 +12,9 @@
         android:title="@string/buscar"
         app:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/action_notification"
+        android:icon="@drawable/notif"
+        android:title="@string/notificaciones"
+        app:showAsAction="ifRoom"/>
+
 </menu>

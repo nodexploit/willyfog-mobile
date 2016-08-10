@@ -26,6 +26,7 @@
     <string name="search">Search</string>
     <string name="perfil">Perfil</string>
     <string name="buscar">Buscar</string>
+    <string name="notificaciones">Notificaciones</string>
     <string name="title_activity_search">Buscador</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -39,4 +40,5 @@
     <string name="auth_pref_key">willy_auth</string>
     <string name="public_key_open">open_key_pub</string>
     <string name="user_id">willy_id_token</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 </resources>
