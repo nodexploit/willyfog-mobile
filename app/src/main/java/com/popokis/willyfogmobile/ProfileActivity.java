@@ -118,6 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
         String nif;
         String university_name;
         String email;
+        Integer role_id;
 
 
         UserInfoDegree () {}
