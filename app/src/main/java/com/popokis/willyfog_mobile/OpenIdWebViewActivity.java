@@ -30,12 +30,7 @@ import okhttp3.Response;
 public class OpenIdWebViewActivity extends AppCompatActivity {
 
     private String clientId = "mobileclient";
-    private String clientSecret = "mobilesecret";
     private String redirectUri = "willyfog://login/callback";
-    private String responseType = "code";
-    private String state = "xyz";
-    private String scope = "openid";
-    private String grantType = "authorization_code";
 
     private OkHttpClient client = new OkHttpClient();
 
@@ -65,6 +60,9 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
 
         });
 
+        String responseType = "code";
+        String state = "xyz";
+        String scope = "openid";
         webView.loadUrl("http://popokis.com:9000/authorize?client_id=" + clientId +
                 "&redirect_uri=" + redirectUri +
                 "&response_type=" + responseType +
@@ -74,6 +72,8 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
 
     public String post(String url, String code) throws IOException {
 
+        String clientSecret = "mobilesecret";
+        String grantType = "authorization_code";
         FormBody body = new FormBody.Builder()
                 .add("grant_type", grantType)
                 .add("client_id", clientId)
