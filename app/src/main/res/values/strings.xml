@@ -12,7 +12,5 @@
     <string name="auth_pref_key">willy_auth</string>
     <string name="public_key_open">open_key_pub</string>
     <string name="user_id">willy_id_token</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_info">user_info</string>
 </resources>

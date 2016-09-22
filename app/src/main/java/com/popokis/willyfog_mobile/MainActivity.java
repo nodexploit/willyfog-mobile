@@ -1,6 +1,8 @@
 package com.popokis.willyfog_mobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,17 +19,22 @@ import android.view.MenuItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.popokis.http.SecureClient;
+import com.popokis.models.UserInfo;
 import com.popokis.models.UserRequests;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final Gson gson = new Gson();
+
+    private String accessToken;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Getting user info
+        setUserInfo();
 
         setDefaultFragment();
 
@@ -160,6 +170,58 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("requests", (Serializable) param);
             startActivity(intent);
             finish();
+        }
+    }
+
+    private void setUserInfo() {
+        SharedPreferences sharedPref = this.getSharedPreferences(
+                getString(R.string.shared_pref_name),
+                Context.MODE_PRIVATE
+        );
+
+        String key = getResources().getString(R.string.auth_pref_key);
+        String userIdent = getResources().getString(R.string.user_id);
+
+        accessToken = sharedPref.getString(key, null);
+        userId = sharedPref.getString(userIdent, null);
+
+        String url = "http://popokis.com:7000/api/v1/users/" + userId + "/info";
+
+        String userInfoString;
+        try {
+            userInfoString = new GetUser().execute(url, accessToken).get();
+
+            SharedPreferences sPref = getApplicationContext().getSharedPreferences(
+                    getString(R.string.shared_pref_name),
+                    Context.MODE_PRIVATE
+            );
+
+            sPref.edit().putString(
+                    getString(R.string.user_info),
+                    userInfoString
+            ).commit();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class GetUser extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... data) {
+            String url = data[0];
+            String accessToken = data[1];
+
+            String result = "";
+            try {
+                result = (new SecureClient(accessToken)).get(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
         }
     }
 }
