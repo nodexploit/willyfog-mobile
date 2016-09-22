@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Willy</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_login_sign_in">Sign in</string>
+
+    <string name="shared_pref_name">com.popokis.willyfogmobile.PREFERENCE_FILE_KEY</string>
+    <string name="auth_pref_key">willy_auth</string>
+    <string name="public_key_open">open_key_pub</string>
+    <string name="user_id">willy_id_token</string>
+</resources>
