@@ -4,10 +4,31 @@
     android:layout_height="match_parent"
     tools:context="com.popokis.willyfog_mobile.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Asignatura"
+            android:ems="10"
+            android:id="@+id/searchEditText"
+            android:layout_gravity="center"
+            android:layout_above="@+id/search_button"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/action_search"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
 </FrameLayout>

@@ -6,22 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.popokis.willyfog_mobile.ItemFragment.OnListFragmentInteractionListener;
 import com.popokis.willyfog_mobile.content.PetitionContent.DummyItem;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link PetitionsFragment.OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class PetitionViewAdapter extends RecyclerView.Adapter<PetitionViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final PetitionsFragment.OnListFragmentInteractionListener mListener;
 
-    public PetitionViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public PetitionViewAdapter(List<DummyItem> items, PetitionsFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -29,7 +28,7 @@ public class PetitionViewAdapter extends RecyclerView.Adapter<PetitionViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_petition_item, parent, false);
         return new ViewHolder(view);
     }
 
