@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.popokis.http.SecureClient;
-import com.popokis.models.UserInfo;
 import com.popokis.models.UserRequests;
 
 import java.io.IOException;
