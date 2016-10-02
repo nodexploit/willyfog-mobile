@@ -6,18 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.popokis.willyfog_mobile.content.EquivalenceContent.DummyItem;
+import com.popokis.models.Equivalence;
 
 import java.util.List;
 
 public class MyEquivalenceRecyclerViewAdapter extends RecyclerView.Adapter<MyEquivalenceRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-//    private final OnListFragmentInteractionListener mListener;
+    private final List<Equivalence> mValues;
+    private final EquivalenceFragment.OnListFragmentInteractionListener mListener;
 
-    public MyEquivalenceRecyclerViewAdapter(List<DummyItem> items /*OnListFragmentInteractionListener listener*/) {
+    public MyEquivalenceRecyclerViewAdapter(List<Equivalence> items, EquivalenceFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
-//        mListener = listener;
+        mListener = listener;
     }
 
     @Override
@@ -30,17 +30,17 @@ public class MyEquivalenceRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).getSubject_name());
+        holder.mContentView.setText(mValues.get(position).getEquivalent_name());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (null != mListener) {
+                if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
-                }*/
+                }
             }
         });
     }
@@ -54,13 +54,13 @@ public class MyEquivalenceRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Equivalence mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.equivalenceId);
+            mContentView = (TextView) view.findViewById(R.id.equivalenceContent);
         }
 
         @Override

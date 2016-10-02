@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.popokis.http.SecureClient;
+import com.popokis.models.Equivalence;
 import com.popokis.models.UserRequests;
 
 import java.io.IOException;
@@ -28,9 +29,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, EquivalenceFragment.OnListFragmentInteractionListener {
 
     private final Gson gson = new Gson();
+    public static Context contextOfApplication;
 
     private String accessToken;
     private String userId;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        contextOfApplication = getApplicationContext();
 
         // Getting user info
         setUserInfo();
@@ -144,6 +148,11 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
+    @Override
+    public void onListFragmentInteraction(Equivalence item) {
+
+    }
+
     private class GetUserRequests extends AsyncTask<String, String, List<UserRequests>> {
 
         @Override
@@ -222,5 +231,9 @@ public class MainActivity extends AppCompatActivity
 
             return result;
         }
+    }
+
+    public MainActivity getThis() {
+        return MainActivity.this;
     }
 }
