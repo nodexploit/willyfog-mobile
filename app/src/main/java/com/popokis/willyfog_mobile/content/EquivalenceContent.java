@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 public class EquivalenceContent {
 
-    private final List<Equivalence> ITEMS = new ArrayList<Equivalence>();
+    private final List<Equivalence> ITEMS = new ArrayList<>();
 
     private String accessToken;
     private ProgressDialog dialog;

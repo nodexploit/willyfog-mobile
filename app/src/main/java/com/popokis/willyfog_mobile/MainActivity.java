@@ -1,7 +1,6 @@
 package com.popokis.willyfog_mobile;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,22 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.popokis.http.SecureClient;
 import com.popokis.models.Equivalence;
 import com.popokis.models.UserRequests;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, EquivalenceFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        EquivalenceFragment.OnListFragmentInteractionListener,
+        PetitionsFragment.OnListFragmentInteractionListener {
 
-    private final Gson gson = new Gson();
     public static Context contextOfApplication;
 
     private String accessToken;
@@ -122,7 +117,6 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
 
@@ -149,36 +143,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Equivalence item) {
-
+    public void onListFragmentInteraction(Equivalence equivalence) {
     }
 
-    private class GetUserRequests extends AsyncTask<String, String, List<UserRequests>> {
+    @Override
+    public void onListFragmentInteraction(UserRequests item) {
 
-        @Override
-        protected List<UserRequests> doInBackground(String... data) {
-            String url = data[0];
-            String accessToken = data[1];
-
-            List<UserRequests> result = null;
-            Type listType = new TypeToken<List<UserRequests>>() {}.getType();
-
-            try {
-                result = gson.fromJson((new SecureClient(accessToken)).get(url), listType);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(List<UserRequests> param) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.putExtra("requests", (Serializable) param);
-            startActivity(intent);
-            finish();
-        }
     }
 
     private void setUserInfo() {
@@ -231,9 +201,5 @@ public class MainActivity extends AppCompatActivity
 
             return result;
         }
-    }
-
-    public MainActivity getThis() {
-        return MainActivity.this;
     }
 }

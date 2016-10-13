@@ -1,72 +1,92 @@
 package com.popokis.willyfog_mobile.content;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
- */
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.popokis.http.SecureClient;
+import com.popokis.models.UserRequests;
+import com.popokis.willyfog_mobile.MainActivity;
+import com.popokis.willyfog_mobile.R;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 public class PetitionContent {
 
-    /**
-     * An array of sample (dummy) items.
-     */
-    public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static final List<UserRequests> ITEMS = new ArrayList<>();
 
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    private ProgressDialog dialog;
+    private final Gson gson = new Gson();
 
-    private static final int COUNT = 25;
+    public PetitionContent(ProgressDialog dialog) {
+        this.dialog = dialog;
 
-    static {
-        // Add some sample items.
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
+        SharedPreferences sharedPref = MainActivity.contextOfApplication.getSharedPreferences(
+                MainActivity.contextOfApplication.getString(R.string.shared_pref_name),
+                Context.MODE_PRIVATE
+        );
+
+        String key = MainActivity.contextOfApplication.getResources().getString(R.string.auth_pref_key);
+        String userIdent = MainActivity.contextOfApplication.getResources().getString(R.string.user_id);
+
+        String accessToken = sharedPref.getString(key, null);
+        String userId = sharedPref.getString(userIdent, null);
+
+        try {
+            addAllItems(new GetUserRequests().execute("http://popokis.com:7000/api/v1/users/" + userId + "/requests", accessToken).get());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 
-    private static void addItem(DummyItem item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+    private void addAllItems(Collection<? extends UserRequests> requests) {
+        ITEMS.addAll(requests);
     }
 
-    private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
-    }
+    private class GetUserRequests extends AsyncTask<String, String, List<UserRequests>> {
 
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }
-
-    /**
-     * A dummy item representing a piece of content.
-     */
-    public static class DummyItem {
-        public final String id;
-        public final String content;
-        public final String details;
-
-        public DummyItem(String id, String content, String details) {
-            this.id = id;
-            this.content = content;
-            this.details = details;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Loading...");
+            dialog.setCancelable(false);
+            dialog.show();
         }
 
         @Override
-        public String toString() {
-            return content;
+        protected List<UserRequests> doInBackground(String... data) {
+            String url = data[0];
+            String accessToken = data[1];
+
+            List<UserRequests> result = null;
+            Type listType = new TypeToken<List<UserRequests>>() {}.getType();
+
+            try {
+                result = gson.fromJson((new SecureClient(accessToken)).get(url), listType);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
         }
+
+        @Override
+        protected void onPostExecute(List<UserRequests> param) {
+            dialog.dismiss();
+        }
+    }
+
+    public List<UserRequests> getITEMS() {
+        return ITEMS;
     }
 }

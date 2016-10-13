@@ -6,21 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.popokis.willyfog_mobile.content.PetitionContent.DummyItem;
+import com.popokis.models.UserRequests;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link PetitionsFragment.OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class PetitionViewAdapter extends RecyclerView.Adapter<PetitionViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<UserRequests> mValues;
     private final PetitionsFragment.OnListFragmentInteractionListener mListener;
 
-    public PetitionViewAdapter(List<DummyItem> items, PetitionsFragment.OnListFragmentInteractionListener listener) {
+    public PetitionViewAdapter(List<UserRequests> items, PetitionsFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,8 +30,8 @@ public class PetitionViewAdapter extends RecyclerView.Adapter<PetitionViewAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(holder.mItem.getSubject_code());
+        holder.mContentView.setText(holder.mItem.getSubject_name());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +54,13 @@ public class PetitionViewAdapter extends RecyclerView.Adapter<PetitionViewAdapte
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public UserRequests mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.petitionId);
+            mContentView = (TextView) view.findViewById(R.id.petitionContent);
         }
 
         @Override

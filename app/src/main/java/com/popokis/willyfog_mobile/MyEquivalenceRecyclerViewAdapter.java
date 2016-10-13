@@ -30,8 +30,9 @@ public class MyEquivalenceRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getSubject_name());
-        holder.mContentView.setText(mValues.get(position).getEquivalent_name());
+        holder.mIdView.setText(Integer.toString(position + 1));
+        holder.mSubjectView.setText(mValues.get(position).getSubject_name());
+        holder.mEquivalentView.setText(mValues.get(position).getEquivalent_name());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,19 +54,21 @@ public class MyEquivalenceRecyclerViewAdapter extends RecyclerView.Adapter<MyEqu
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mSubjectView;
+        public final TextView mEquivalentView;
         public Equivalence mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.equivalenceId);
-            mContentView = (TextView) view.findViewById(R.id.equivalenceContent);
+            mSubjectView = (TextView) view.findViewById(R.id.equivalenceSubject);
+            mEquivalentView = (TextView) view.findViewById(R.id.equivalenceEquivalent);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mSubjectView.getText() + "'";
         }
     }
 }

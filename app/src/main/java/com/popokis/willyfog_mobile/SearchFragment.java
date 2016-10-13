@@ -1,11 +1,13 @@
 package com.popokis.willyfog_mobile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -24,6 +26,10 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String subjectSearch = searchAsig.getText().toString();
+
+                // close the keyboard
+                final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 
                 changeFragment(subjectSearch);
             }
