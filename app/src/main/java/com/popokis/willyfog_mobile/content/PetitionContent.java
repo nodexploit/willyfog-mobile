@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 public class PetitionContent {
 
-    public static final List<UserRequests> ITEMS = new ArrayList<>();
+    public static List<UserRequests> ITEMS;
 
     private ProgressDialog dialog;
     private final Gson gson = new Gson();
@@ -50,6 +50,7 @@ public class PetitionContent {
     }
 
     private void addAllItems(Collection<? extends UserRequests> requests) {
+        ITEMS = new ArrayList<>();
         ITEMS.addAll(requests);
     }
 
