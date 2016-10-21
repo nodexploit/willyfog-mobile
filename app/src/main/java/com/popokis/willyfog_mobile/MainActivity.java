@@ -15,8 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
 import com.popokis.http.SecureClient;
 import com.popokis.models.Equivalence;
+import com.popokis.models.RequestInfo;
 import com.popokis.models.UserRequests;
 
 import java.io.IOException;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity
 
     private String accessToken;
     private String userId;
+
+    private final Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +155,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(UserRequests item) {
-
+        String url = "http://popokis.com:7000/api/v1/requests/" + item.getId();
+        try {
+            RequestInfo rq = new GetRequestInfo().execute(url, accessToken).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setUserInfo() {
@@ -198,6 +209,23 @@ public class MainActivity extends AppCompatActivity
             String result = "";
             try {
                 result = (new SecureClient(accessToken)).get(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+    }
+
+    private class GetRequestInfo extends AsyncTask<String, String, RequestInfo> {
+        @Override
+        protected RequestInfo doInBackground(String... data) {
+            String url = data[0];
+            String accessToken = data[1];
+
+            RequestInfo result = null;
+            try {
+                result = gson.fromJson((new SecureClient(accessToken)).get(url), RequestInfo.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
