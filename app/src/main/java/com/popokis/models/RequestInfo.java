@@ -1,5 +1,7 @@
 package com.popokis.models;
 
+import java.util.List;
+
 public class RequestInfo {
 
     private Integer id;
@@ -12,6 +14,7 @@ public class RequestInfo {
     private String mobility_type;
     private Integer accepted;
     private Integer rejected;
+    private List<DestinationSubject> destination_subjects;
 
     public RequestInfo() {}
 
@@ -93,5 +96,13 @@ public class RequestInfo {
 
     public void setRejected(Integer rejected) {
         this.rejected = rejected;
+    }
+
+    public List<DestinationSubject> getDestination_subjects() {
+        return destination_subjects;
+    }
+
+    public void setDestination_subjects(List<DestinationSubject> destination_subjects) {
+        this.destination_subjects = destination_subjects;
     }
 }

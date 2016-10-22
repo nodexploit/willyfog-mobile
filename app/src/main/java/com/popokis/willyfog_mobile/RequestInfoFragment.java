@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.popokis.models.RequestInfo;
@@ -14,9 +16,10 @@ import com.popokis.willyfog_mobile.content.RequestInfoContent;
 
 public class RequestInfoFragment extends Fragment {
 
-    protected TextView originCredits;
-    protected TextView originMobility;
-    protected TextView requestStatus;
+    protected TextView originSubjectField;
+    protected TextView originSubjectValue;
+    protected TextView destinationSubjectField;
+    protected TextView destinationSubjectValue;
 
     private static final String ARG_PARAM1 = "requestId";
 
@@ -82,20 +85,42 @@ public class RequestInfoFragment extends Fragment {
 
     private View setRequestInfoView(RequestInfo rq, View view) {
 
-        originCredits = (TextView) view.findViewById(R.id.originCredits);
-        originMobility = (TextView) view.findViewById(R.id.originMobility);
-        requestStatus = (TextView) view.findViewById(R.id.requestStatus);
+        TableLayout table = (TableLayout) view.findViewById(R.id.requestInfoTable);
+        TableRow tableOriginRow = (TableRow) view.findViewById(R.id.originInfoRow);
+        TableRow tableDestinationRow = (TableRow) view.findViewById(R.id.destinationInfoRow);
 
-        originCredits.setText(rq.getSubjectCredits());
-        originMobility.setText(rq.getMobilityType());
+        originSubjectField = (TextView) view.findViewById(R.id.originSubjectField);
+        originSubjectValue = (TextView) view.findViewById(R.id.originSubjectValue);
+
+        destinationSubjectField = (TextView) view.findViewById(R.id.destinationSubjectField);
+        destinationSubjectValue = (TextView) view.findViewById(R.id.destinationSubjectValue);
+
+        originSubjectField.setText(rq.getSubjectCredits());
+        originSubjectValue.setText(rq.getMobilityType());
+
+        tableOriginRow.addView(originSubjectField);
+        tableOriginRow.addView(originSubjectValue);
+
+        originSubjectField.setText(rq.getSubjectCredits());
+        originSubjectValue.setText(rq.getMobilityType());
+
+        tableOriginRow.addView(originSubjectField);
+        tableOriginRow.addView(originSubjectValue);
+
+        originSubjectField.setText("Estado");
 
         if (rq.getAccepted() == 1) {
-            requestStatus.setText("Aceptada");
+            originSubjectValue.setText("Aceptada");
         } else if (rq.getRejected() == 1) {
-            requestStatus.setText("Rechazada");
+            originSubjectValue.setText("Rechazada");
         } else {
-            requestStatus.setText("Pendiente");
+            originSubjectValue.setText("Pendiente");
         }
+
+        tableOriginRow.addView(originSubjectField);
+        tableOriginRow.addView(originSubjectValue);
+
+        table.addView(tableOriginRow);
 
         return view;
     }
