@@ -4,86 +4,11 @@
     android:layout_height="match_parent"
     tools:context="com.popokis.willyfog_mobile.RequestInfoFragment">
 
-        <TextView
-            android:id="@+id/originHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:gravity="center"
-            android:textSize="32sp"
-            android:text="Origen"/>
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/originInfoTable"
             android:stretchColumns="0">
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/originInfoRow">
-
-                <TextView
-                    android:id="@+id/originSubjectField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin"
-                    android:textAppearance="?attr/textAppearanceListItem" />
-
-                <TextView
-                    android:id="@+id/originSubjectValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin"
-                    android:textAppearance="?attr/textAppearanceListItem" />
-
-            </TableRow>
         </TableLayout>
-
-            <TextView
-                android:id="@+id/destinationHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:textAppearance="?attr/textAppearanceListItem"
-                android:gravity="center"
-                android:textSize="32sp"
-                android:layout_below=""
-                android:text="Destino"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/destinationInfoTable"
-            android:stretchColumns="0">
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/destinationInfoRow">
-
-                <TextView
-                    android:id="@+id/destinationSubjectField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin"
-                    android:textAppearance="?attr/textAppearanceListItem" />
-
-                <TextView
-                    android:id="@+id/destinationSubjectValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin"
-                    android:textAppearance="?attr/textAppearanceListItem" />
-
-            </TableRow>
-        </TableLayout>
-    </ScrollView>
 
 </FrameLayout>
