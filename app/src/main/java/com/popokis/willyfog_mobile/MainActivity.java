@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.gson.Gson;
 import com.popokis.http.SecureClient;
 import com.popokis.models.Equivalence;
 import com.popokis.models.UserRequests;
@@ -34,8 +33,6 @@ public class MainActivity extends AppCompatActivity
 
     private String accessToken;
     private String userId;
-
-    private final Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

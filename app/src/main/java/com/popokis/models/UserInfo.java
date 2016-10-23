@@ -13,6 +13,8 @@ public class UserInfo implements Serializable{
     private String university_name;
     private String email;
     private Integer role_id;
+    private String role_name;
+    private String gravatar;
 
 
     public UserInfo () {}
@@ -87,5 +89,21 @@ public class UserInfo implements Serializable{
 
     public void setRole_id(Integer role_id) {
         this.role_id = role_id;
+    }
+
+    public String getRole_name() {
+        return role_name;
+    }
+
+    public void setRole_name(String role_name) {
+        this.role_name = role_name;
+    }
+
+    public String getGravatar() {
+        return gravatar;
+    }
+
+    public void setGravatar(String gravatar) {
+        this.gravatar = gravatar;
     }
 }
