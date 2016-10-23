@@ -1,7 +1,6 @@
 package com.popokis.willyfog_mobile;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -188,13 +187,6 @@ public class RequestInfoFragment extends Fragment {
         makeSeparator(originInfoTable, view);
 
         for (DestinationSubject iter : destinations) {
-            TableRow destinationSubjectNameRow = new TableRow(view.getContext());
-            TableRow destinationCreditsRow = new TableRow(view.getContext());
-            TableRow destinationDegreeRow = new TableRow(view.getContext());
-            TableRow destinationCentreRow = new TableRow(view.getContext());
-            TableRow destinationUniversityRow = new TableRow(view.getContext());
-            TableRow destinationCityRow = new TableRow(view.getContext());
-            TableRow destinationCountryRow = new TableRow(view.getContext());
 
             TextView destinationSubjectNameField = new TextView(view.getContext());
             TextView destinationSubjectNameValue = new TextView(view.getContext());
@@ -211,19 +203,12 @@ public class RequestInfoFragment extends Fragment {
             TextView destinationCountryField = new TextView(view.getContext());
             TextView destinationCountryValue = new TextView(view.getContext());
 
-//            destinationSubjectNameField.setText("Asignatura:");
             destinationSubjectNameValue.setText(iter.getSubject_name());
-//            destinationCreditsField.setText("Créditos:");
             destinationCreditsValue.setText(iter.getSubject_credits() + " ECTS");
-//            destinationDegreeField.setText("Grado:");
             destinationDegreeValue.setText(iter.getDegree());
-//            destinationCentreField.setText("Centro:");
             destinationCentreValue.setText(iter.getCentre());
-//            destinationUniversityField.setText("Universidad:");
             destinationUniversityValue.setText(iter.getUniversity());
-//            destinationCityField.setText("Ciudad:");
             destinationCityValue.setText(iter.getCity());
-//            destinationCountryField.setText("País:");
             destinationCountryValue.setText(iter.getCountry());
 
             destinationSubjectNameField.setTextSize(textSize);
@@ -247,29 +232,6 @@ public class RequestInfoFragment extends Fragment {
             destinationCountryField.setTextSize(textSize);
             destinationCountryValue.setTextSize(textSize);
             destinationCountryValue.setGravity(Gravity.CENTER);
-
-//            destinationSubjectNameRow.addView(destinationSubjectNameField);
-//            destinationSubjectNameRow.addView(destinationSubjectNameValue);
-//            destinationCreditsRow.addView(destinationCreditsField);
-//            destinationCreditsRow.addView(destinationCreditsValue);
-//            destinationDegreeRow.addView(destinationDegreeField);
-//            destinationDegreeRow.addView(destinationDegreeValue);
-//            destinationCentreRow.addView(destinationCentreField);
-//            destinationCentreRow.addView(destinationCentreValue);
-//            destinationUniversityRow.addView(destinationUniversityField);
-//            destinationUniversityRow.addView(destinationUniversityValue);
-//            destinationCityRow.addView(destinationCityField);
-//            destinationCityRow.addView(destinationCityValue);
-//            destinationCountryRow.addView(destinationCountryField);
-//            destinationCountryRow.addView(destinationCountryValue);
-
-//            originInfoTable.addView(destinationSubjectNameRow);
-//            originInfoTable.addView(destinationCreditsRow);
-//            originInfoTable.addView(destinationDegreeRow);
-//            originInfoTable.addView(destinationCentreRow);
-//            originInfoTable.addView(destinationUniversityRow);
-//            originInfoTable.addView(destinationCityRow);
-//            originInfoTable.addView(destinationCountryRow);
 
             originInfoTable.addView(destinationSubjectNameValue);
             originInfoTable.addView(destinationCreditsValue);
