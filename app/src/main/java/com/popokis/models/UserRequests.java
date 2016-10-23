@@ -8,6 +8,8 @@ public class UserRequests implements Serializable {
     String subject_code;
     String subject_name;
     Integer id;
+    String mobility_type;
+    String category;
 
     public UserRequests() {}
 
@@ -41,5 +43,21 @@ public class UserRequests implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getMobility_type() {
+        return mobility_type;
+    }
+
+    public void setMobility_type(String mobility_type) {
+        this.mobility_type = mobility_type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

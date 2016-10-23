@@ -7,21 +7,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.popokis.models.UserRequests;
-import com.popokis.willyfog_mobile.content.PetitionContent;
+import com.popokis.willyfog_mobile.content.PendingRequestContent;
 
-public class PetitionsFragment extends Fragment {
+public class PendingRequestFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    public PetitionsFragment() {
+    public PendingRequestFragment() {
     }
 
     @Override
@@ -48,9 +50,9 @@ public class PetitionsFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            PetitionContent p = new PetitionContent(new ProgressDialog(this.getActivity()));
+            PendingRequestContent p = new PendingRequestContent(new ProgressDialog(this.getActivity()));
 
-            recyclerView.setAdapter(new PetitionViewAdapter(p.getITEMS(), mListener));
+            recyclerView.setAdapter(new PendingRequestViewAdapter(p.getITEMS(), mListener));
         }
         return view;
     }

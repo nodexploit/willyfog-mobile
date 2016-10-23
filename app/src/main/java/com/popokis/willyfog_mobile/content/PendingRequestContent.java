@@ -6,27 +6,26 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.popokis.http.SecureClient;
+import com.popokis.models.PendingRequest;
 import com.popokis.models.UserRequests;
 import com.popokis.willyfog_mobile.MainActivity;
 import com.popokis.willyfog_mobile.R;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class PetitionContent {
+public class PendingRequestContent {
 
     public static List<UserRequests> ITEMS;
 
     private ProgressDialog dialog;
     private final Gson gson = new Gson();
 
-    public PetitionContent(ProgressDialog dialog) {
+    public PendingRequestContent(ProgressDialog dialog) {
         this.dialog = dialog;
 
         SharedPreferences sharedPref = MainActivity.contextOfApplication.getSharedPreferences(
@@ -70,10 +69,11 @@ public class PetitionContent {
             String accessToken = data[1];
 
             List<UserRequests> result = null;
-            Type listType = new TypeToken<List<UserRequests>>() {}.getType();
+            PendingRequest pendingRequest;
 
             try {
-                result = gson.fromJson((new SecureClient(accessToken)).get(url), listType);
+                pendingRequest = gson.fromJson((new SecureClient(accessToken)).get(url), PendingRequest.class);
+                result = pendingRequest.getPending();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -10,12 +10,12 @@ import com.popokis.models.UserRequests;
 
 import java.util.List;
 
-public class PetitionViewAdapter extends RecyclerView.Adapter<PetitionViewAdapter.ViewHolder> {
+public class PendingRequestViewAdapter extends RecyclerView.Adapter<PendingRequestViewAdapter.ViewHolder> {
 
     private final List<UserRequests> mValues;
-    private final PetitionsFragment.OnListFragmentInteractionListener mListener;
+    private final PendingRequestFragment.OnListFragmentInteractionListener mListener;
 
-    public PetitionViewAdapter(List<UserRequests> items, PetitionsFragment.OnListFragmentInteractionListener listener) {
+    public PendingRequestViewAdapter(List<UserRequests> items, PendingRequestFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -24,6 +24,7 @@ public class PetitionViewAdapter extends RecyclerView.Adapter<PetitionViewAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_petition_item, parent, false);
+
         return new ViewHolder(view);
     }
 

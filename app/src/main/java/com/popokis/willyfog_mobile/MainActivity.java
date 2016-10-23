@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         EquivalenceFragment.OnListFragmentInteractionListener,
-        PetitionsFragment.OnListFragmentInteractionListener,
+        PendingRequestFragment.OnListFragmentInteractionListener,
         RequestInfoFragment.OnFragmentInteractionListener {
 
     public static Context contextOfApplication;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_petition:
-                fragmentClass = PetitionsFragment.class;
+                fragmentClass = PendingRequestFragment.class;
                 break;
             case R.id.nav_profile:
                 fragmentClass = MyProfileFragment.class;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.content_main, fragment, fragmentClass.getSimpleName())
                 .commit();
 
-        setTitle(item.getTitle());
+        setTitle((fragmentClass == PendingRequestFragment.class) ? "Pedientes" : item.getTitle());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

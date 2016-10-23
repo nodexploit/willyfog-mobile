@@ -45,6 +45,7 @@ public class RequestInfoContent {
             String accessToken = data[1];
 
             RequestInfo result = null;
+
             try {
                 result = gson.fromJson((new SecureClient(accessToken)).get(url), RequestInfo.class);
             } catch (IOException e) {
