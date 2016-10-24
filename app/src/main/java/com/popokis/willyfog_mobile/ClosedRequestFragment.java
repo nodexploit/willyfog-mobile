@@ -12,16 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.popokis.models.UserRequests;
-import com.popokis.willyfog_mobile.content.PendingRequestContent;
+import com.popokis.willyfog_mobile.content.ClosedRequestContent;
 
-public class PendingRequestFragment extends Fragment {
+public class ClosedRequestFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    public PendingRequestFragment() {
+    public ClosedRequestFragment() {
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PendingRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_petition_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_closed_request_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -48,9 +48,9 @@ public class PendingRequestFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            PendingRequestContent p = new PendingRequestContent(new ProgressDialog(this.getActivity()));
+            ClosedRequestContent c = new ClosedRequestContent(new ProgressDialog(this.getActivity()));
 
-            recyclerView.setAdapter(new PendingRequestViewAdapter(p.getITEMS(), mListener));
+            recyclerView.setAdapter(new ClosedRequestAdapter(c.getITEMS(), mListener));
         }
         return view;
     }
@@ -74,6 +74,6 @@ public class PendingRequestFragment extends Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(UserRequests item);
+        void onListFragmentClosedInteraction(UserRequests item);
     }
 }

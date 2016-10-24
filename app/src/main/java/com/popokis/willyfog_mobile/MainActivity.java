@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         EquivalenceFragment.OnListFragmentInteractionListener,
         PendingRequestFragment.OnListFragmentInteractionListener,
-        RequestInfoFragment.OnFragmentInteractionListener {
+        RequestInfoFragment.OnFragmentInteractionListener,
+        ClosedRequestFragment.OnListFragmentInteractionListener,
+        ClosedRequestInfoFragment.OnFragmentInteractionListener {
 
     public static Context contextOfApplication;
 
@@ -118,6 +120,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_search:
                 fragmentClass = SearchFragment.class;
                 break;
+            case R.id.nav_closed_petition:
+                fragmentClass = ClosedRequestFragment.class;
+                break;
             default:
                 fragmentClass = MyProfileFragment.class;
         }
@@ -134,7 +139,13 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.content_main, fragment, fragmentClass.getSimpleName())
                 .commit();
 
-        setTitle((fragmentClass == PendingRequestFragment.class) ? "Pedientes" : item.getTitle());
+        if(fragmentClass == PendingRequestFragment.class) {
+            setTitle("Pendientes");
+        } else if (fragmentClass == ClosedRequestFragment.class) {
+            setTitle("Cerradas");
+        } else {
+            setTitle(item.getTitle());
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -218,6 +229,32 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onListFragmentClosedInteraction(UserRequests item) {
+        Fragment fragment = null;
+        Class fragmentClass;
+        fragmentClass = ClosedRequestInfoFragment.class;
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+            Bundle args = new Bundle();
+            args.putString("closedId", item.getId() + "");
+            fragment.setArguments(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit();
+
+        setTitle(item.getSubject_name());
+    }
+
+    @Override
+    public void onFragmentClosedInfoInteraction(Uri uri) {
 
     }
 

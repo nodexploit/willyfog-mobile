@@ -12,8 +12,11 @@ public class RequestInfo {
     private String subject_credits;
     private Integer mobility_type_id;
     private String mobility_type;
-    private Integer accepted;
-    private Integer rejected;
+    private String student_surname;
+    private String student_name;
+    private String student_email;
+    private String created_at;
+    private String status;
     private List<DestinationSubject> destination_subjects;
 
     public RequestInfo() {}
@@ -82,27 +85,51 @@ public class RequestInfo {
         this.mobility_type = mobility_type;
     }
 
-    public Integer getAccepted() {
-        return accepted;
-    }
-
-    public void setAccepted(Integer accepted) {
-        this.accepted = accepted;
-    }
-
-    public Integer getRejected() {
-        return rejected;
-    }
-
-    public void setRejected(Integer rejected) {
-        this.rejected = rejected;
-    }
-
     public List<DestinationSubject> getDestination_subjects() {
         return destination_subjects;
     }
 
     public void setDestination_subjects(List<DestinationSubject> destination_subjects) {
         this.destination_subjects = destination_subjects;
+    }
+
+    public String getStudent_surname() {
+        return student_surname;
+    }
+
+    public void setStudent_surname(String student_surname) {
+        this.student_surname = student_surname;
+    }
+
+    public String getStudent_name() {
+        return student_name;
+    }
+
+    public void setStudent_name(String student_name) {
+        this.student_name = student_name;
+    }
+
+    public String getStudent_email() {
+        return student_email;
+    }
+
+    public void setStudent_email(String student_email) {
+        this.student_email = student_email;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

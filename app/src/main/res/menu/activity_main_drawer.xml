@@ -5,7 +5,11 @@
         <item
             android:id="@+id/nav_petition"
             android:icon="@drawable/ic_menu_send"
-            android:title="Mis peticiones" />
+            android:title="Peticiones pendientes" />
+        <item
+            android:id="@+id/nav_closed_petition"
+            android:icon="@drawable/ic_assignment_late_black_24dp"
+            android:title="Peticiones cerradas" />
         <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_search_black_24dp"

@@ -15,19 +15,19 @@ import android.widget.TextView;
 
 import com.popokis.models.DestinationSubject;
 import com.popokis.models.RequestInfo;
-import com.popokis.willyfog_mobile.content.RequestInfoContent;
+import com.popokis.willyfog_mobile.content.ClosedRequestInfoContent;
 
 import java.util.List;
 
-public class RequestInfoFragment extends Fragment {
+public class ClosedRequestInfoFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "requestId";
+    private static final String ARG_PARAM1 = "closedId";
 
     private String mParam1;
 
     private OnFragmentInteractionListener mListener;
 
-    public RequestInfoFragment() {}
+    public ClosedRequestInfoFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,16 +41,16 @@ public class RequestInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_request_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_closed_request_info, container, false);
 
-        RequestInfoContent r = new RequestInfoContent(mParam1);
+        ClosedRequestInfoContent r = new ClosedRequestInfoContent(mParam1);
 
         return setRequestInfoView(r.getRq(), view);
     }
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentClosedInfoInteraction(uri);
         }
     }
 
@@ -72,14 +72,14 @@ public class RequestInfoFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+        void onFragmentClosedInfoInteraction(Uri uri);
     }
 
     private View setRequestInfoView(RequestInfo rq, View view) {
 
-        TableLayout originInfoTable = (TableLayout) view.findViewById(R.id.originInfoTable);
+        TableLayout originInfoTable = (TableLayout) view.findViewById(R.id.closedInfoTable);
 
-        view = setOriginTitle(originInfoTable, view);
+        view = setOriginTitle(rq, originInfoTable, view);
 
         view = setOriginDataRow(rq, originInfoTable, view);
 
@@ -90,15 +90,29 @@ public class RequestInfoFragment extends Fragment {
         return view;
     }
 
-    private View setOriginTitle(TableLayout originTable, View view) {
+    private View setOriginTitle(RequestInfo rq, TableLayout originTable, View view) {
         TextView originText = new TextView(view.getContext());
+        TextView statusText = new TextView(view.getContext());
 
         originText.setText("Origen");
         originText.setGravity(Gravity.CENTER);
         originText.setTextSize(32);
         originText.setTextColor(Color.parseColor("#000000"));
 
+        if(rq.getStatus().equals("accepted")) {
+            statusText.setText("Aceptada");
+            statusText.setTextColor(Color.parseColor("#3abd3a"));
+        } else {
+            statusText.setText("Rechazada");
+            statusText.setTextColor(Color.parseColor("#ff0000"));
+        }
+
+
+        statusText.setGravity(Gravity.RIGHT);
+        statusText.setTextSize(18);
+
         originTable.addView(originText);
+        originTable.addView(statusText);
 
         return view;
     }
