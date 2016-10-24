@@ -200,7 +200,7 @@ public class OpenIdWebViewActivity extends AppCompatActivity {
             webView.loadUrl("about:blank");
             webView.freeMemory();
             webView.pauseTimers();
-            webView = null;
+            webView = new WebView(getApplicationContext());
         }
 
     }
