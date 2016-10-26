@@ -18,6 +18,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_perm_identity_black_24dp"
             android:title="Mi perfil" />
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_email_black_24dp"
+            android:title="Notificaciones" />
     </group>
 
 </menu>

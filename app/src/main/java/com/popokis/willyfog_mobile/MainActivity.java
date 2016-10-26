@@ -18,6 +18,7 @@ import android.view.MenuItem;
 
 import com.popokis.http.SecureClient;
 import com.popokis.models.Equivalence;
+import com.popokis.models.Notification;
 import com.popokis.models.UserRequests;
 
 import java.io.IOException;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity
         PendingRequestFragment.OnListFragmentInteractionListener,
         RequestInfoFragment.OnFragmentInteractionListener,
         ClosedRequestFragment.OnListFragmentInteractionListener,
-        ClosedRequestInfoFragment.OnFragmentInteractionListener {
+        ClosedRequestInfoFragment.OnFragmentInteractionListener,
+        NotificationFragment.OnListFragmentInteractionListener {
 
     public static Context contextOfApplication;
 
@@ -122,6 +124,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_closed_petition:
                 fragmentClass = ClosedRequestFragment.class;
+                break;
+            case R.id.nav_notification:
+                fragmentClass = NotificationFragment.class;
                 break;
             default:
                 fragmentClass = MyProfileFragment.class;
@@ -255,6 +260,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentClosedInfoInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Notification item) {
 
     }
 
