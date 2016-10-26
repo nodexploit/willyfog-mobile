@@ -92,13 +92,20 @@ public class RequestInfoFragment extends Fragment {
 
     private View setOriginTitle(TableLayout originTable, View view) {
         TextView originText = new TextView(view.getContext());
+        TextView statusText = new TextView(view.getContext());
 
         originText.setText("Origen");
         originText.setGravity(Gravity.CENTER);
         originText.setTextSize(32);
         originText.setTextColor(Color.parseColor("#000000"));
 
+        statusText.setText("Pendiente");
+        statusText.setGravity(Gravity.RIGHT);
+        statusText.setTextSize(22);
+        statusText.setTextColor(Color.GRAY);
+
         originTable.addView(originText);
+        originTable.addView(statusText);
 
         return view;
     }
