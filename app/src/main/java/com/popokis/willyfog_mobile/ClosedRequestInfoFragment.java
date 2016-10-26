@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -92,27 +93,30 @@ public class ClosedRequestInfoFragment extends Fragment {
 
     private View setOriginTitle(RequestInfo rq, TableLayout originTable, View view) {
         TextView originText = new TextView(view.getContext());
-        TextView statusText = new TextView(view.getContext());
 
         originText.setText("Origen");
         originText.setGravity(Gravity.CENTER);
         originText.setTextSize(32);
         originText.setTextColor(Color.parseColor("#000000"));
 
+        ImageView imageView = (ImageView) view.findViewById(R.id.closedImage);
+        TextView statusText = (TextView) view.findViewById(R.id.closedTextImage);
+
         if(rq.getStatus().equals("accepted")) {
+            imageView.setBackgroundResource(R.drawable.check);
+            imageView.setAlpha(0.2f);
             statusText.setText("Aceptada");
-            statusText.setTextColor(Color.parseColor("#3abd3a"));
+            statusText.setTextColor(Color.GREEN);
+            statusText.setAlpha(0.5f);
         } else {
+            imageView.setBackgroundResource(R.drawable.cross);
+            imageView.setAlpha(0.2f);
             statusText.setText("Rechazada");
-            statusText.setTextColor(Color.parseColor("#ff0000"));
+            statusText.setTextColor(Color.RED);
+            statusText.setAlpha(0.5f);
         }
 
-
-        statusText.setGravity(Gravity.RIGHT);
-        statusText.setTextSize(18);
-
         originTable.addView(originText);
-        originTable.addView(statusText);
 
         return view;
     }
