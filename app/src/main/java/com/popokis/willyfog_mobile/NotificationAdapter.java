@@ -1,9 +1,11 @@
 package com.popokis.willyfog_mobile;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popokis.models.Notification;
@@ -16,7 +18,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private final NotificationFragment.OnListFragmentInteractionListener mListener;
 
     public NotificationAdapter(List<Notification> items, NotificationFragment.OnListFragmentInteractionListener listener) {
-        mValues = items;
+        if(items.size() > 0) {
+            mValues = items;
+        } else {
+            Notification notification = new Notification();
+            notification.setContent("No hay notificaciones.");
+            notification.setUser_id(new Long(-1));
+            items.add(notification);
+            mValues = items;
+        }
         mListener = listener;
     }
 
@@ -29,9 +39,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getUser_id().toString());
-        holder.mContentView.setText(mValues.get(position).getContent());
+        if (holder.mItem.getUser_id().intValue() < 0) {
+            holder.mContentView.setText(mValues.get(position).getContent());
+            holder.mContentView.setTextSize(32);
+            holder.mContentView.setGravity(Gravity.CENTER);
+        } else {
+            holder.mContentView.setText(mValues.get(position).getContent());
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,14 +66,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
         public final TextView mContentView;
         public Notification mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.notificationId);
             mContentView = (TextView) view.findViewById(R.id.notificationContent);
         }
 

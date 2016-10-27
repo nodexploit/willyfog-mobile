@@ -10,4 +10,5 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.popokis.willyfog_mobile.NotificationFragment"
-    tools:listitem="@layout/notification_item" />
+    tools:listitem="@layout/notification_item" >
+</android.support.v7.widget.RecyclerView>

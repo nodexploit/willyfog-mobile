@@ -6,7 +6,6 @@ public class Notification {
 
     private Long user_id;
     private String content;
-    private Date read_at;
     private Date created_at;
 
     public Long getUser_id() {
@@ -23,14 +22,6 @@ public class Notification {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Date getRead_at() {
-        return read_at;
-    }
-
-    public void setRead_at(Date read_at) {
-        this.read_at = read_at;
     }
 
     public Date getCreated_at() {

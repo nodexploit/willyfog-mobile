@@ -1,5 +1,6 @@
 package com.popokis.willyfog_mobile;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,8 @@ public class NotificationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.notification_item_list, container, false);
 
+        NotificationContent n = new NotificationContent(new ProgressDialog(this.getActivity()));
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -46,8 +49,10 @@ public class NotificationFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new NotificationAdapter(NotificationContent.ITEMS, mListener));
+
+            recyclerView.setAdapter(new NotificationAdapter(n.getITEMS(), mListener));
         }
+
         return view;
     }
 

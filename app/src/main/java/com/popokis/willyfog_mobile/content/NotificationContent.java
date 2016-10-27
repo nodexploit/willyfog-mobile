@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.popokis.http.SecureClient;
-import com.popokis.models.Equivalence;
 import com.popokis.models.Notification;
 import com.popokis.willyfog_mobile.MainActivity;
 import com.popokis.willyfog_mobile.R;
@@ -42,7 +41,7 @@ public class NotificationContent {
         String userId = sharedPref.getString(userIdent, null);
 
         try {
-            addAllItems(new NotificationContent.GetNotifications().execute("http://popokis.com:7000/api/v1/users/" + userId + "/requests", accessToken).get());
+            addAllItems(new NotificationContent.GetNotifications().execute("http://popokis.com:7000/api/v1/users/" + userId + "/notifications", accessToken).get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
