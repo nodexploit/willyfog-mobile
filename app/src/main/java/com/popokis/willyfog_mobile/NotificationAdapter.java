@@ -5,7 +5,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.popokis.models.Notification;
@@ -23,7 +22,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         } else {
             Notification notification = new Notification();
             notification.setContent("No hay notificaciones.");
-            notification.setUser_id(new Long(-1));
             items.add(notification);
             mValues = items;
         }
@@ -41,7 +39,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.mItem = mValues.get(position);
-        if (holder.mItem.getUser_id().intValue() < 0) {
+        if (holder.mItem.getContent().equals("No hay notificaciones.")) {
             holder.mContentView.setText(mValues.get(position).getContent());
             holder.mContentView.setTextSize(32);
             holder.mContentView.setGravity(Gravity.CENTER);
