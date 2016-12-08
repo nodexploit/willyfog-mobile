@@ -21,5 +21,23 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="138dp" />
 
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/willy_fog"
+        android:layout_marginTop="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Bienvenido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textBienvenido"
+        android:layout_above="@+id/login_sign_in_button"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000"
+        android:textSize="20dp"/>
+
 
 </RelativeLayout>
